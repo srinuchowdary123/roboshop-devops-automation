@@ -79,7 +79,9 @@ cp $scripts_path/mongo_repo.file /etc/yum.repos.d/mongo.repo
 
 dnf install mongodb-mongosh -y
 
-mongosh --host roboshop-mongodb.srinun.in </app/db/master-data.
+
+
+mongosh --host roboshop-mongodb.srinun.in </app/db/master-data.js
 
 # check the data load is success or not
 
