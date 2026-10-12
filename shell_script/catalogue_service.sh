@@ -20,7 +20,7 @@ yellow="\e[33m"
 nc="\e[0m"
 
 if [ ! -d "$logs_folder" ]; then
-    echo -e " [info] ${red} directory not exists so creating the new one and creating the logsfile too"
+    echo -e " [info] ${red} directory not exists so creating the new one and creating the logsfile too ${nc}"
     mkdir -p "${logs_folder}"
     touch "${logs_file}"
 else
@@ -75,7 +75,7 @@ mkdir -p /app                         &>> "${logs_file}"
 #Download the application code to created app directory.
  # check the application code already exists means we can delete and re-download the new one.
 
- if [ -f /app/catalogue.zip ]; then
+ if [ -f "/app/catalogue.zip" ]; then
     echo "the catalogue.zip already exists so deleting the old one and downloading the new one"
     rm -f /app/catalogue.zip
  fi
@@ -86,7 +86,7 @@ unzip /tmp/catalogue.zip   &>> "${logs_file}"
 
 # just check the instalation is success or not by listing the files in the /app directory
 
- if [ -f /app/catalogue.zip ]; then
+ if [ -f "/app/catalogue.zip" ]; then
     echo -e " [info] ${green} the catalgue.zip now means the new file donwloaded sucessfully ${nc}"
 else
     echo -e " [error] ${red} the catalgue.zip not downloaded properly please check the network connectivity and try again ${nc}"
