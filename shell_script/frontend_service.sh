@@ -19,6 +19,7 @@ validate () {
 else
     echo "$2 is got failed"
     exit 1
+fi
 }
 
 #list the nginx modules first and then we can disable the default module and enable the new module
