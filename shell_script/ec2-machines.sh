@@ -78,6 +78,8 @@ for name_of_machine in "$@"; do
 
             else
             echo "This is the frontend machine, so I am adding the public IP to the Route 53 record."
+            echo "Instance name: $instance_name"
+            echo "Instance ID: $new_instance_id"
 
             public_ip=$(aws ec2 describe-instances --instance-ids "${new_instance_id}" --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
 
