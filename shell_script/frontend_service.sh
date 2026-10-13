@@ -69,6 +69,9 @@ unzip /tmp/frontend.zip
 validate $? "unzipped the frontend content"
 
 
+# copy the service file to the nginx configuration directory
+
+cp $scripts_path/nginx_service.file /etc/nginx/nginx.conf
 
 # lets restart the nginx  service to reflect the changes
 
