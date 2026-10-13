@@ -19,6 +19,8 @@ red="\e[31m"
 yellow="\e[33m"
 nc="\e[0m"
 
+
+
 if [ ! -d "$logs_folder" ]; then
     echo -e " [info] ${red} directory not exists so creating the new one and creating the logsfile too ${nc}"
     mkdir -p "${logs_folder}"
@@ -29,40 +31,43 @@ else
 fi
     
 
+# writing the validate function to validate the status of the command executed instated of writing the if condition for each command executed
+# it should take two argumets first is the $? and second is the name/comment we provided 
+
+validate() { 
+    if [ $1 -ne 0 ]; then
+        echo " [error] ${red} $2 failed ${nc}" &>> "${logs_file}"
+        exit 1
+    else
+        echo " [info] ${green} $2 succeeded ${nc}" &>> "${logs_file}"
+    fi
+}
 # Install NodeJS, By default NodeJS 16 is available, We would like to enable 20 version and install list.
 
 dnf module disable nodejs -y  &>> "${logs_file}"
 
-if [ $? -eq 0 ]; then
-    echo "nodejs module disable suceessfully"
-else
-    echo "nodejs module disable failed"
-    exit 1
-fi
-
-#enabling the nodejs 20 module
+validate $? "nodejs module disabled"
 
 dnf module enable nodejs:20 -y &>> "${logs_file}"
 
-if [ $? -eq 0 ]; then
-    echo "nodejs module enable suceessfully"  &>> "${logs_file}"
+validate $? "nodejs module enable"
+
+
+
+
+# check the nodejs installed or not already
+dnf list installed nodejs &>> "${logs_file}"
+
+if [ $? -gt 0 ]; then
+    echo -e " [info] ${yellow} the nodejs is not installed so installing the nodejs now ${nc}" &>> "${logs_file }"
+     echo -e " [info] ${green} installing the nodejs ${nc}" &>> "${logs_file }"
+    dnf install nodejs -y
 else
-    echo "nodejs module enable failed"     &>> "${logs_file}"
-    exit 1
+    echo -e " [info] ${green} the nodejs is already installed so skipping the installation ${nc}" &>> "${logs_file }"
 fi
 
 
 
-# installing the nodejs
-dnf install nodejs -y
-
-# check the nodejs is installed or not
-if [ $? -eq 0 ]; then
-    echo "nodejs installed suceessfully"   &>> "${logs_file}"
-else
-    echo "nodejs installation failed"     &>> "${logs_file}"
-    exit 1
-fi
 
 # creating the catalogue user and group
 
@@ -100,12 +105,7 @@ npm install
 
 cp $scripts_path/catalogue.service /etc/systemd/system/catalogue.service
 
-if [ $? -eq 0 ]; then
-    echo " service file copied suceessfully"   &>> "${logs_file}"
-else
-    echo " service file copy is failed"     &>> "${logs_file}"
-    exit 1
-fi
+validate $? "service file copied sucessfully"
 
 #do the systemctl daemon-reload
 systemctl daemon-reload
@@ -117,33 +117,22 @@ systemctl start catalogue
 
 systemctl is-active catalogue &>> "${logs_file}"
 
-if [ $? -eq 0 ]; then
-    echo -e " [info] ${green} the catalogue service is up and running ${nc}"
-else
-    echo -e " [error] ${red} the catalogue service is not running please check the logs ${nc}"
-    exit 1
-fi
+validate $? "catalogue service is up and running"
+
+
 
 #To load schema / master data we need to install mongodb client and then we can load it.
 
 #To have mongo client installed we have to setup MongoDB repo and install mongodb-client. 
 cp $scripts_path/mongo_repo.file /etc/yum.repos.d/mongo.repo
 
-if [ $? -eq 0 ]; then
-    echo " mongo repo file copied suceessfully"   &>> "${logs_file}"
-else
-    echo " mongo repo file copy is failed"     &>> "${logs_file}"
-    exit 1
-fi
+validate $? "mongo repo copied sucessfully"
 
 dnf install mongodb-mongosh -y
 
-if [ $? -eq 0 ]; then
-    echo " mongodb client installed suceessfully"   &>> "${logs_file}"
-else
-    echo " mongodb client installation failed"     &>> "${logs_file}"
-    exit 1
-fi
+validate $? "mongodb client installed sucessfully"
+
+
 
 mongosh --host roboshop-mongodb.srinun.in </app/db/master-data.js
 
