@@ -6,6 +6,7 @@
 
 user_id=$(id -u)
 
+scripts_path=$(pwd)
 if [ "$user_id" -ne 0 ]; then
     echo "this script must run with the sudo  user or root user"
     exit 1
@@ -69,11 +70,10 @@ unzip /tmp/frontend.zip
 validate $? "unzipped the frontend content"
 
 
-# copy the service file to the nginx configuration directory
+# copy the service file to the nginx configuration directory 
 
-cd script
 
-cp nginx_service.file /etc/nginx/nginx.conf
+cp $scripts_path/nginx_service.file /etc/nginx/nginx.conf
 
 # lets restart the nginx  service to reflect the changes
 
