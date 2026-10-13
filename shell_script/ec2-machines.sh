@@ -79,7 +79,7 @@ for name_of_machine in "$@"; do
             else
             echo "This is the frontend machine, so I am adding the public IP to the Route 53 record."
 
-            public_ip=$(aws ec2 describe-instances --instance-ids "${instance_id}" --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
+            public_ip=$(aws ec2 describe-instances --instance-ids "${new_instance_id}" --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
 
             aws route53 change-resource-record-sets \
                 --hosted-zone-id "${hosted_zone_id}" \
