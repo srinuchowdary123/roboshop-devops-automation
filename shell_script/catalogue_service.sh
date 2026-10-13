@@ -87,7 +87,7 @@ mkdir -p /app                         &>> "${logs_file}"
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip   &>> "${logs_file}"
 cd /app    &>> "${logs_file}"
-unzip /tmp/catalogue.zip   &>> "${logs_file}"
+unzip -o /tmp/catalogue.zip   &>> "${logs_file}"
 
 # just check the instalation is success or not by listing the files in the /app directory
 
