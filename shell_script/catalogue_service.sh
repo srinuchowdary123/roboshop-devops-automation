@@ -92,9 +92,9 @@ unzip -o /tmp/catalogue.zip   &>> "${logs_file}"
 # just check the instalation is success or not by listing the files in the /app directory
 
  if [ -f "/app/server.js" ]; then
-    echo -e " [info] ${green} the catalgue.zip now means the new file donwloaded sucessfully ${nc}"
+    echo -e " [info] ${green} the server.js now means the new file donwloaded sucessfully ${nc}"
 else
-    echo -e " [error] ${red} the catalgue.zip not downloaded properly please check the network connectivity and try again ${nc}"
+    echo -e " [error] ${red} the code not downloaded properly please check the network connectivity and try again ${nc}"
     exit 1
  fi
 
@@ -128,7 +128,16 @@ cp $scripts_path/mongo_repo.file /etc/yum.repos.d/mongo.repo
 
 validate $? "mongo repo copied sucessfully"
 
-dnf install mongodb-mongosh -y
+mongosh --version
+
+if [ $? -ne 0 ]; then
+    echo -e " [info] ${yellow} the mongodb client is not installed so installing the mongodb client ${nc}"
+    dnf install mongodb-mongosh -y
+
+else
+    echo -e " [info] ${green} the mongodb client is already installed so skipping the installation ${nc}"
+fi
+
 
 validate $? "mongodb client installed sucessfully"
 
@@ -138,7 +147,7 @@ mongosh --host roboshop-mongodb.srinun.in </app/db/master-data.js
 
 # check the data load is success or not
 
-COUNT=$(mongosh catalogue --quiet --eval "db.products.countDocuments()")
+COUNT=$(mongosh --host roboshop-mongodb.srinun.in catalogue --quiet --eval "db.products.countDocuments()")
 
 if [ "$COUNT" -eq 0 ]; then
     echo "data not loaded properly please check one more time"
