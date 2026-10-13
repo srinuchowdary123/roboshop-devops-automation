@@ -59,11 +59,11 @@ validate $? "nodejs module enable"
 dnf list installed nodejs &>> "${logs_file}"
 
 if [ $? -gt 0 ]; then
-    echo -e " [info] ${yellow} the nodejs is not installed so installing the nodejs now ${nc}" &>> "${logs_file }"
+    echo -e " [info] ${yellow} the nodejs is not installed so installing the nodejs now ${nc}" &>> "${logs_file}"
      echo -e " [info] ${green} installing the nodejs ${nc}" &>> "${logs_file }"
     dnf install nodejs -y
 else
-    echo -e " [info] ${green} the nodejs is already installed so skipping the installation ${nc}" &>> "${logs_file }"
+    echo -e " [info] ${green} the nodejs is already installed so skipping the installation ${nc}" &>> "${logs_file}"
 fi
 
 
