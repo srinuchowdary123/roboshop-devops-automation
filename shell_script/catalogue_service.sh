@@ -69,9 +69,17 @@ fi
 
 
 
-# creating the catalogue user and group
+# if user already exists then we can skip the user creation and if not we can create the user and group
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop  &>> "${logs_file}"
+id -u roboshop 
+
+if [ $? -eq 0 ]; then
+    echo -e " [info] ${green} the roboshop user already exists so skipping the user creation ${nc}" &>> "${logs_file}"
+else
+    echo -e " [info] ${yellow} the roboshop user is not there so creating the new one ${nc}" &>> "${logs_file}"
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop  &>> "${logs_file}"
+fi
+validate $? "roboshop user created successfully"
 
 #lets create the app directory and download the catalogue micro service code
 
@@ -110,10 +118,13 @@ validate $? "service file copied sucessfully"
 #do the systemctl daemon-reload
 systemctl daemon-reload
 
+validate $? "daemon reload done sucessfully"
 #enable and start the catalogue service
 
 systemctl enable catalogue 
+validate $? "catalogue service enabled sucessfully"
 systemctl start catalogue
+validate $? "catalogue service started sucessfully"
 
 systemctl is-active catalogue &>> "${logs_file}"
 
