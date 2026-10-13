@@ -75,6 +75,8 @@ validate $? "unzipped the frontend content"
 
 cp $scripts_path/nginx_service.file /etc/nginx/nginx.conf
 
+validate $? "copied the nginx service file to the nginx configuration directory"
+
 # lets restart the nginx  service to reflect the changes
 
 systemctl restart nginx 
