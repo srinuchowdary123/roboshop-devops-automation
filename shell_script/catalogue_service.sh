@@ -154,8 +154,7 @@ validate $? "mongodb client installed sucessfully"
 
 
 
-mongosh --host roboshop-mongodb.srinun.in </app/db/master-data.js
-
+mongosh --host roboshop-mongodb.srinun.in catalogue < /app/db/master-data.js
 # check the data load is success or not
 
 COUNT=$(mongosh --host roboshop-mongodb.srinun.in catalogue --quiet --eval "db.products.countDocuments()")
