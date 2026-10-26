@@ -51,11 +51,22 @@ for name_of_machine in "$@"; do
             fi
         instance_id=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=$instance_name" "Name=instance-state-name,Values=running" --query 'Reservations[].Instances[].InstanceId' --output text)
 
+
+
+# #	
+# AMI ID
+# ami-0055977a6e828a4f4
+# Name
+# Redhat-9-DevOps-Practice
+# Owner
+# 973714476881 (not your account 274016496402)    # public ami details
+# Created
+# 2026-10-19
         if [ -n "$instance_id" ] && [ "$instance_id" != "None" ]; then
             echo "$instance_name already exists. Skipping creation."
         else
             echo "Creating $instance_name..."
-            aws ec2 run-instances --image-id ami-0220d79f3f480ecf5 --instance-type t3.micro --security-group-ids "$common_sg_id" "$app_sg_id" --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance_name}]"
+            aws ec2 run-instances --image-id ami-0055977a6e828a4f4 --instance-type t3.micro --security-group-ids "$common_sg_id" "$app_sg_id" --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance_name}]"
 
             if [ $? -eq 0 ]; then
                 echo -e "${green} Successfully launched $instance_name ${nc}"
