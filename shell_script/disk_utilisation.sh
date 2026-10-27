@@ -35,15 +35,21 @@ nc="\e[0m"
 
 disk_utilisation=$(df -h / | awk '{print $5}' | sed '1d; s/%//')
 
-if [ "${disk_utilisation}" -ge 80 ]; then
-    echo -e "${red}[ ALERT ] disk utilisation crossed 80 percent. Urgent action required.${nc}"
-    echo "Disk is above 80 percent on the frontend machine." | mail -s "disk utilisation alert" -r srinunuthi555@gmail.com srinunuthi555@gmail.com
-elif [ "${disk_utilisation}" -ge 70 ]; then
-    echo -e "${yellow}[ warning ] disk utilisation crossed 70 percent.${nc}"
-    echo "Disk is above 70 percent on the frontend machine." | mail -s "disk utilisation alert" -r srinunuthi555@gmail.com srinunuthi555@gmail.com
+hostname=$(hostname -f)
+email="srinunuthi555@gmail.com"
+
+if [ "$disk_utilisation" -ge 80 ]; then
+    echo -e "${red}[ ALERT ] Disk utilization is ${disk_utilisation}%. Urgent action required.${nc}"
+    echo "ALERT: Disk utilization is ${disk_utilisation}% on ${hostname} (/) ." |
+        mail -s "CRITICAL: Disk utilization alert" -r "$email" "$email"
+
+elif [ "$disk_utilisation" -ge 70 ]; then
+    echo -e "${yellow}[ WARNING ] Disk utilization is ${disk_utilisation}%.${nc}"
+    echo "WARNING: Disk utilization is ${disk_utilisation}% on ${hostname} (/)." |
+        mail -s "WARNING: Disk utilization alert" -r "$email" "$email"
+
 else
-    echo -e "${green}[ ok ] disk utilisation is under 70 percent.${nc}"
-    echo "Disk is below 70 percent on the frontend machine." | mail -s "disk utilisation alert" -r srinunuthi555@gmail.com srinunuthi555@gmail.com
+    echo -e "${green}[ OK ] Disk utilization is ${disk_utilisation}%.${nc}"
 fi
 
 
