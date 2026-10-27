@@ -82,6 +82,9 @@ pip3 install -r requirements.txt   &>> ${logs_file}
 validate $? "installing the requirements.txt"
 
 
+
+cp "$scripts_path/payments_service.file" "/etc/systemd/system/payment.service"
+
 systemctl daemon-reload
 
 validate $?  " re loading the daemon"
