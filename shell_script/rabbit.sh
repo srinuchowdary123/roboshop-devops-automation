@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u
 
 # check the script is running with the sudo user or not
 user_id=$(id -u)

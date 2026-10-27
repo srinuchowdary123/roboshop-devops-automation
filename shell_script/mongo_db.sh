@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u
 
 # this script is used to install the mongodb in the ec2 instance
 

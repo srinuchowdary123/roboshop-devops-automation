@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u
 
 # check the user is root or not
 

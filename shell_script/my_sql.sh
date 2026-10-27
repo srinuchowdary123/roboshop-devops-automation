@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u
 
 user_id=$(id -u)
 

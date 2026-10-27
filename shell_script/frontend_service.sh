@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u
 
 # now we are going to deploy the frontend micro service in the ec2 instance
 

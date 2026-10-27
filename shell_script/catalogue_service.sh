@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u
 
 # this script will create the catalogue micro service
 

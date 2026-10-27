@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u
 
 #installing the redis service in the ec2 machine
 
