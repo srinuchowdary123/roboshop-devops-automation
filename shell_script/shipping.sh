@@ -91,7 +91,7 @@ mv target/shipping-1.0.jar shipping.jar
 
 validate $? "jar file "
 
-cp "$scripts_path/user_service.file" "/etc/systemd/system/shipping.service"
+cp "$scripts_path/shipping_service.file" "/etc/systemd/system/shipping.service"
 
 #load the service
 
