@@ -76,28 +76,31 @@ validate $? "roboshop user created successfully"
 
 # check the directory is there or not first
 
-app_folder=app
-if [ ! -d "/$app_folder" ]; then
-    echo " [info]  ${green} creating the directory ${nc}"
-    mkdir /$app_folder
-    rm -rf /tmp/cart.zip
-    curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip
-    cd /$app_folder 
-    unzip /tmp/cart.zip
+if [ ! -d /app ];then 
+    echo " [info] $green the directory not exists creating the directory"
+    mkdir /app
 else
-    echo " [info]  ${yellow} directory already exists skipping the creation and  running the remaini steps${nc}"
-    rm -rf /tmp/cart.zip
-    curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip
-    cd /$app_folder 
-    unzip /tmp/cart.zip
-fi
+    echo "the directory already there $nc"
+
+
+#Download the application code to created app directory.
+ # check the application code already exists means we can delete and re-download the new one.
+
+ if [ -f "/tmp/cart.zip" ]; then
+    echo "the cart.zip already exists so deleting the old one and downloading the new one"
+    rm -f /tmp/cart.zip
+ fi
+
+curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip   &>> "${logs_file}"
+cd /app    &>> "${logs_file}"
+unzip -o /tmp/cart.zip   &>> "${logs_file}"
 
 validate $? "creating directory and downloading the code "
 
 
 # download the dependencies
 
-cd /$app_folder
+cd /app
 
 npm install 
 
