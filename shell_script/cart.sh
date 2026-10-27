@@ -85,7 +85,11 @@ if [ ! -d "/$app_folder" ]; then
     cd /$app_folder 
     unzip /tmp/cart.zip
 else
-    echo " [info]  ${yellow} directory already exists skipping the creation ${nc}"
+    echo " [info]  ${yellow} directory already exists skipping the creation and  running the remaini steps${nc}"
+    rm -rf /tmp/cart.zip
+    curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip
+    cd /$app_folder 
+    unzip /tmp/cart.zip
 fi
 
 validate $? "creating directory and downloading the code "
