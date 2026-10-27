@@ -117,3 +117,8 @@ for name_of_machine in "$@"; do
         fi
     fi
 done
+
+# printing the public ip of the created instances to connect using the terminal
+
+public_ip=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=roboshop-*" "Name=instance-state-name,Values=pending,running" --query 'Reservations[].Instances[].PublicIpAddress' --output text)
+echo "the public ip to connect the machine is $public_ip"
