@@ -64,7 +64,19 @@ validate $? "installing the nodejs"
 
 # add the application user
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+ # check the use system user is already there or not
+
+ # if user already exists then we can skip the user creation and if not we can create the user and group
+
+id -u roboshop 
+
+if [ $? -eq 0 ]; then
+    echo -e " [info] ${green} the roboshop user already exists so skipping the user creation ${nc}" &>> "${logs_file}"
+else
+    echo -e " [info] ${yellow} the roboshop user is not there so creating the new one ${nc}" &>> "${logs_file}"
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop  &>> "${logs_file}"
+fi
+
 
 validate $? "creating theapp user"
 
