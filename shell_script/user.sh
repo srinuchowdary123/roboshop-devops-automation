@@ -46,17 +46,18 @@ validate() {
 
 # disable the dnf module
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y   &>> "$logs_file"
 
 validate $? "diasbled the dnf module"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y   &>> "$logs_file"
 
 validate $? "enable the dnf module"
 
 #installing nodejs
+echo "installing node js"
 
-dnf install nodejs -y
+dnf install nodejs -y   &>> "$logs_file"
 
 validate $? "installing the nodejs"
 
