@@ -12,7 +12,7 @@ fi
 
 scripts_path=$(pwd)
 logs_folder="/var/log/roboshop"
-logs_file="$logs_folder/catalogue.log"
+logs_file="$logs_folder/cart.log"
 
 green="\e[32m"
 red="\e[31m"
