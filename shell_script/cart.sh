@@ -80,10 +80,10 @@ app_folder=app
 if [ ! -d "/$app_folder" ]; then
     echo " [info]  ${green} creating the directory ${nc}"
     mkdir /$app_folder
-    rm -rf /tmp/user.zip  
+    rm -rf /tmp/cart.zip
     curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip
     cd /$app_folder 
-    unzip /tmp/user.zip
+    unzip /tmp/cart.zip
 else
     echo " [info]  ${yellow} directory already exists skipping the creation ${nc}"
 fi
