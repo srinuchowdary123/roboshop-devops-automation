@@ -94,3 +94,21 @@ npm install
 validate $? " installing the dependencies of application"
 
 
+cp "$scripts_path/user_service.file" "/etc/systemd/system/user.service"
+
+#load the service
+
+systemctl daemon-reload
+
+validate $?  " re loading the daemon"
+
+#start and enable the user 
+
+systemctl enable user 
+
+validate $? "enabling the user"
+
+systemctl start user
+
+validate $? "started the user"
+
