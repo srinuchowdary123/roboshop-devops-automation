@@ -82,4 +82,17 @@ pip3 install -r requirements.txt   &>> ${logs_file}
 validate $? "installing the requirements.txt"
 
 
+systemctl daemon-reload
+
+validate $?  " re loading the daemon"
+
+#start and enable the user 
+
+systemctl enable payment  
+
+validate $? "enabling the payment "
+
+systemctl start payment 
+
+validate $? "started the payment "
 
