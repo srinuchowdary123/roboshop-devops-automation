@@ -43,7 +43,7 @@ validate() {
 
 
 
-cp "$scripts_path/rabbit_mq_service.file" "/etc/systemd/system/user.service"
+cp "$scripts_path/rabbit_mq_service.file" "/etc/yum.repos.d/rabbitmq.repo"
 
 validate $? "copy got sucessful"
 
