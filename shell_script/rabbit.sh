@@ -71,20 +71,4 @@ rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
 
 validate $? "setting the permissions"
 
-cp "$scripts_path/payments_service.file" "/etc/systemd/system/payment.service"
-
-validate $? "copying the service file"
-
-
-# enabling the payment
-
-systemctl enable payment 
-
-validate $? "enabling the payment svc"
-
-# starting the payment svc"
-
-systemctl start payment
-
-validate $? "starting the payment svc"
 
