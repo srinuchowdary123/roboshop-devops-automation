@@ -5,9 +5,10 @@
 #run the script with the sudo user
 
 
+user_id=$(id -u)
 
 
-if [ "$(id -u)" -eq 0 ]; then
+if [ "$user_id" -ne 0 ]; then
     echo "This script must be run as root or with sudo privileges."
     exit 1
 fi
