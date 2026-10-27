@@ -115,18 +115,18 @@ dnf install mysql -y   &>> ${logs_file}
 
 validate $? "installing the mysql client"
 
-# load the schema 
 mysql -h roboshop-mysql.srinun.in -uroot -pRoboShop@1 < /app/db/schema.sql
+validate $? "loading shipping schema"
 
+mysql -h roboshop-mysql.srinun.in -uroot -pRoboShop@1 < /app/db/app-user.sql
+validate $? "creating shipping database user"
 
-# create the user for mysql
-
-mysql -h roboshop-mysql.srinun.in -uroot -pRoboShop@1 < /app/db/app-user.sql 
-
-
-# restarting the shipping svc
+mysql -h roboshop-mysql.srinun.in -uroot -pRoboShop@1 < /app/db/master-data.sql
+validate $? "loading shipping master data"
 
 systemctl restart shipping
+validate $? "restarting shipping"
+# restarting the shipping svc
 
-validate $? "re starting the shipping svc"
+
 
